@@ -29,7 +29,7 @@ const sessionCtxDefaults = {
   // showToast: false,
   // toastMessage: '',
   // toastType: 'default' as 'error' | 'success' | 'warning' | 'info' | 'default',
-  toggleModal: (id?: RefObject<HTMLButtonElement> | undefined) => {
+  toggleModal: (id?: RefObject<HTMLButtonElement> | undefined | null) => {
     id
   },
   // toggleToast: () => {

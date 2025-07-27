@@ -5,8 +5,17 @@ import { styleMerge } from '~/utils/styleUtils'
 
 import { radioSelectVariants } from './radioSelect-variants'
 
-interface RadioSelectProps extends HTMLProps<HTMLDivElement>,
+interface RadioSelectOption {
+  id: string
+  value: string
+  label: string
+  name: string
+  defaultChecked?: boolean
+}
+
+interface RadioSelectProps extends Omit<HTMLProps<HTMLDivElement>, 'data'>,
   VariantProps<typeof radioSelectVariants> {
+  data: RadioSelectOption[]
   handleRadioChange: (evt: ChangeEvent<HTMLInputElement>) => void
 }
 

@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "eg2.tslint",
+    "christian-kohler.npm-intellisense",
+    "dbaeumer.vscode-eslint",
+    "prisma.prisma",
+    "vscode-icons-team.vscode-icons",
+    "streetsidesoftware.code-spell-checker",
+    "github.copilot",
+    "bradlc.vscode-tailwindcss",
+    "gruntfuggly.todo-tree"
+  ]
+}
