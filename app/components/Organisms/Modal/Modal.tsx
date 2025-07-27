@@ -99,7 +99,7 @@ const Modal: FC<ModalProps>
             onClick={() => handleClick()}
             aria-label={t('components.modal.close') || 'Close modal'}
           >
-            <IoMdCloseCircle size={34} color="currentColor" className="fill-noir-gold" />
+            <IoMdCloseCircle size={34} color="currentColor" className="fill-cyan-800" />
           </button>
           {children}
         </div>

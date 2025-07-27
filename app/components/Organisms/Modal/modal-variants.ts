@@ -28,7 +28,7 @@ export const modalBackgroundVariant = cva(
         top: 'left-0'
       },
       background: {
-        default: 'bg-noir-black/50 backdrop-blur-xs',
+        default: 'bg-black/50 backdrop-blur-xs',
         light: 'bg-white/80',
         purple: 'bg-purple-700/50'
       }
@@ -87,9 +87,9 @@ export const modalContentVariant = cva(
         top: 'w-full lg:w-4/5 xl:w-3/5 duration-500 rounded'
       },
       innerType: {
-        default: 'bg-noir-light text-gray-900 p-4',
+        default: 'bg-slate-100 text-gray-900 p-4',
         light: 'bg-white',
-        dark: 'bg-noir-black text-gray-100 noir-border',
+        dark: 'bg-black text-gray-100 border-black',
         slate: 'bg-slate-800 text-slate-100'
       }
     }
