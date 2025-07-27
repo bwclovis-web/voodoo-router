@@ -1,11 +1,14 @@
 import { useGSAP } from '@gsap/react'
 import { gsap } from 'gsap'
-import { useRef } from 'react'
+import { useContext, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type MetaFunction, useLoaderData } from 'react-router'
 
+import { Button } from '~/components/Atoms/Button/Button'
 import GlobalNavigation from '~/components/Molecules/GlobalNavigation/GlobalNavigation'
+import Modal from '~/components/Organisms/Modal/Modal'
 import { getAllFeatures } from '~/models/feature.server'
+import SessionContext from '~/providers/sessionProvider'
 
 import banner from '../images/voodoo.webp'
 
@@ -28,6 +31,8 @@ export default function Home() {
   const { features } = useLoaderData<typeof loader>()
   const container = useRef<HTMLDivElement>(null)
   const { t } = useTranslation()
+  const { toggleModal, modalId, modalOpen } = useContext(SessionContext)
+  const triggerRef = useRef<HTMLButtonElement>(null!)
 
   useGSAP(
     () => {
@@ -54,7 +59,18 @@ export default function Home() {
             <p className="text-xl" dangerouslySetInnerHTML={{ __html: feature.detail }} />
           </details>
         ))}
+        <Button ref={triggerRef} onClick={() => toggleModal(triggerRef, 'feature-1', 'hello')}>
+          HELLO
+        </Button>
       </section>
+      {modalOpen && modalId === 'feature-1' && (
+        <Modal
+          innerType="dark"
+          animateStart="top"
+        >
+          Hello
+        </Modal>
+      )}
     </div>
   )
 }

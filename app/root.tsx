@@ -12,7 +12,10 @@ import {
 } from 'react-router'
 
 import type { Route } from './+types/root'
+import FourOFourPage from './components/Containers/404Page/404Page'
+import { NonceProvider, useNonce } from './hooks/use-nonce'
 import i18n from './modules/i18n/i18n.client'
+import { SessionProvider } from './providers/sessionProvider'
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -23,11 +26,12 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap'
+    href: 'https://fonts.googleapis.com/css2?family=Limelight&display=swap'
   }
 ]
 
-export function Layout({ children }: { children: ReactNode, cspNonce: string }) {
+export function Layout({ children }: { children: ReactNode }) {
+  const nonce = useNonce()
   return (
     <html lang="en">
       <head>
@@ -36,10 +40,11 @@ export function Layout({ children }: { children: ReactNode, cspNonce: string }) 
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-noir-black">
         {children}
-        <ScrollRestoration />
-        <Scripts />
+        <ScrollRestoration nonce={nonce} />
+        <Scripts nonce={nonce} />
+        <div id="modal-portal" />
       </body>
     </html>
   )
@@ -47,12 +52,17 @@ export function Layout({ children }: { children: ReactNode, cspNonce: string }) 
 
 export default function App() {
   return (
-    <I18nextProvider i18n={i18n}>
-      <Outlet />
-    </I18nextProvider>
+    <NonceProvider value={undefined}>
+      <I18nextProvider i18n={i18n}>
+        <SessionProvider>
+          <Outlet />
+        </SessionProvider>
+      </I18nextProvider>
+    </NonceProvider>
   )
 }
 
+// TODO: Refactor per error
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = 'Oops!'
   let details = 'An unexpected error occurred.'
@@ -64,7 +74,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       = error.status === 404
         ? 'The requested page could not be found.'
         : error.statusText || details
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
+    if (error.status === 404) {
+      return <FourOFourPage />
+    }
+  }
+  else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message
     stack = error.stack
   }
